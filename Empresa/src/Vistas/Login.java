@@ -3,9 +3,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Vistas;
-
+import Seguridad.Cifrado;
 import Controlador.ControladorLogin;
 import DAO.DAOLogin;
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,15 +28,20 @@ public class Login extends javax.swing.JFrame {
     /**
      * Declaración atributos
      */
-
+   
     private static Login login;
     private DAOLogin cLogin=ControladorLogin.getControladorLogin();
+    Cifrado seguridad = new Cifrado();
+
+ 
+
     
     /**
      * Se crea un login
      */
     private Login() {
-        initComponents();
+       initComponents();
+
     }
     /**
      * Login 
@@ -138,8 +151,30 @@ public class Login extends javax.swing.JFrame {
         /**
          * Se especifica que se le indicará al usuario al momento que dijite los parametros
          */
-        if(cLogin.VerificarUsuarios(usuario.getText(), contrasenia.getText()))
+        
+        if(cLogin.VerificarUsuarios(usuario.getText(), contrasenia.getText())){
+            
             JOptionPane.showMessageDialog(this, "Usuario correcto", "Información", JOptionPane.OK_OPTION);
+            try {
+               String claveSecreta="aaaa";
+               String a=seguridad.encriptar(contrasenia.getText(), claveSecreta);
+               JOptionPane.showMessageDialog(this, seguridad.encriptar(contrasenia.getText(), claveSecreta), "Encriptado", JOptionPane.OK_OPTION);
+               JOptionPane.showMessageDialog(this, seguridad.desencriptar(a,claveSecreta), "Desencriptado", JOptionPane.OK_OPTION);
+                 
+            } catch (UnsupportedEncodingException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (NoSuchPaddingException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidKeyException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IllegalBlockSizeException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (BadPaddingException ex) {
+                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         else
             JOptionPane.showMessageDialog(this, "Usuario incorrecto", "Información", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_jButton1ActionPerformed
