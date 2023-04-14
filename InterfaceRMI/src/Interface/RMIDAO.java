@@ -15,7 +15,8 @@ public interface RMIDAO extends Remote{
     public int sumar(int numero1, int numero2) throws RemoteException;
     public int restar(int numero1, int numero2) throws RemoteException;
     public int multiplicar(int numero1, int numero2) throws RemoteException;
-    public float dividir(int numero1, int numero2) throws RemoteException;
+    public String operacion(String op)throws RemoteException;
+    public int dividir(int numero1, int numero2) throws RemoteException;
     public String Mensaje(String mensaje) throws RemoteException;
     
 }

@@ -26,19 +26,20 @@ public class ClienteRMI {
             RMIDAO interfaz = (RMIDAO) registro.lookup("RemotoRMI");
             int suma;
             suma = interfaz.sumar(10, 14);
-            System.out.println(suma);
+            System.out.println("La suma es: "+suma);
             
             int resta;
             resta = interfaz.restar(10, 14);
-            System.out.println(resta);
+            System.out.println("La resta es: "+resta);
             
             int multiplicacion;
             multiplicacion = interfaz.multiplicar(10, 14);
-            System.out.println(multiplicacion);
+            System.out.println("La multiplicacion es: "+multiplicacion);
             
             int division;
-            division = (int) interfaz.dividir(10, 14);
-            System.out.println(division); 
+            division = interfaz.dividir(10, 14);
+            System.out.println("La division es: "+division);
+ 
             
         }catch(Exception e){
             System.out.println(""+e);
