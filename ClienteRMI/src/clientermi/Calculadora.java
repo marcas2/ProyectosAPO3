@@ -3,19 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package clientermi;
+
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-
 import Interface.RMIDAO;
 import java.rmi.AccessException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  *
  * @author maria
  */
+
 public class Calculadora extends javax.swing.JFrame {
     
     String op;
@@ -57,6 +59,7 @@ public class Calculadora extends javax.swing.JFrame {
         jButton17 = new javax.swing.JButton();
         jButton18 = new javax.swing.JButton();
         panel3 = new java.awt.Panel();
+        jButton10 = new javax.swing.JButton();
         jButton19 = new javax.swing.JButton();
         jButton20 = new javax.swing.JButton();
         jButton21 = new javax.swing.JButton();
@@ -174,6 +177,14 @@ public class Calculadora extends javax.swing.JFrame {
 
         panel3.setLayout(new java.awt.GridLayout(1, 0, 4, 4));
 
+        jButton10.setText("C");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
+        panel3.add(jButton10);
+
         jButton19.setText("=");
         jButton19.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,8 +265,22 @@ public class Calculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton18ActionPerformed
 
     private void jButton19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton19ActionPerformed
-        // TODO add your handling code here:==
-        num2=Integer.parseInt(pantalla.getText());
+        try {
+            // TODO add your handling code here:==
+            num2=Integer.parseInt(pantalla.getText());
+            Registry registro=LocateRegistry.getRegistry("127.0.0.1",7777);
+            RMIDAO interfaz = (RMIDAO) registro.lookup("RemotoRMI");
+            String respuesta=interfaz.operacion(op, num1, num2);
+            pantalla.setText(respuesta);
+            
+        } catch (RemoteException ex) {
+            Logger.getLogger(Calculadora.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NotBoundException ex) {
+            Logger.getLogger(Calculadora.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+ 
+
    
     }//GEN-LAST:event_jButton19ActionPerformed
 
@@ -264,6 +289,7 @@ public class Calculadora extends javax.swing.JFrame {
         num1 = Integer.parseInt(pantalla.getText());
         op="+";
         pantalla.setText("0");
+        
     }//GEN-LAST:event_jButton16ActionPerformed
 
     private void jButton17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton17ActionPerformed
@@ -286,6 +312,11 @@ public class Calculadora extends javax.swing.JFrame {
         op="/";
         pantalla.setText("0");
     }//GEN-LAST:event_jButton20ActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        // TODO add your handling code here:
+        pantalla.setText("");
+    }//GEN-LAST:event_jButton10ActionPerformed
 /**
      * Concatenar
      * metodo para concatenar los numeros
@@ -306,7 +337,15 @@ public class Calculadora extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
+        
+       /** try{
+            Registry registro=LocateRegistry.getRegistry("127.0.0.1",7777);
+            RMIDAO interfaz = (RMIDAO) registro.lookup("RemotoRMI");
+            
+        }catch(Exception e){
+            System.out.println(""+e);
+        }
+**/
        
        
         /* Set the Nimbus look and feel */
@@ -343,6 +382,7 @@ public class Calculadora extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton16;
     private javax.swing.JButton jButton17;
     private javax.swing.JButton jButton18;

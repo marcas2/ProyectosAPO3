@@ -66,8 +66,15 @@ public class ServerRMI extends UnicastRemoteObject implements RMIDAO{
     }
 
     @Override
-    public String operacion(String op) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String operacion(String ope, int numero1, int numero2) throws RemoteException {
+       int result=0;
+       switch (ope){ 
+            case "+" : result = sumar(numero1, numero2);break;
+            case "-" : result = restar(numero1, numero2);break;
+            case "x" : result = multiplicar(numero1, numero2);break;
+            case "/" : result = dividir(numero1, numero2);break;
+       }
+       return String.valueOf(result);
     }
     
 }

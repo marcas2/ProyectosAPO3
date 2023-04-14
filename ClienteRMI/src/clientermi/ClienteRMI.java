@@ -21,7 +21,7 @@ public class ClienteRMI {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        try{
+       try{
             Registry registro=LocateRegistry.getRegistry("127.0.0.1",7777);
             RMIDAO interfaz = (RMIDAO) registro.lookup("RemotoRMI");
             int suma;
@@ -44,6 +44,7 @@ public class ClienteRMI {
         }catch(Exception e){
             System.out.println(""+e);
         }
+        
     }
     
 }
